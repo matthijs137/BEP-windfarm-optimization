@@ -344,10 +344,10 @@ class PitchFoilRun:
 
         for n,test_index in enumerate(self.short_relative_test_matrix.index):
             if self.short_relative_test_matrix.loc[test_index, 'relativef'] == 1 and self.short_relative_test_matrix.loc[test_index, 'relativeA'] == 1:
-                Nforce23 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S3_offset))/3
                 Nforce1 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S1']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S1']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S1']))-self.S1_offset))/3
-                Nforce2 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S1_offset))/3
-                Nforce3 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S1_offset))/3
+                Nforce2 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S2_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S2_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S2_offset))/3
+                Nforce3 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S3_offset))/3
+                Nforce23 = Nforce2 + Nforce3
 
                 F1.append([self.short_relative_test_matrix.loc[test_index, 'P'], Nforce1])
                 F2.append([self.short_relative_test_matrix.loc[test_index, 'P'], Nforce2])
@@ -363,6 +363,7 @@ class PitchFoilRun:
         colors = ['red','darkorange','gold', 'green']
         labels = ['F1','F2','F3','F2+F3']
         BaseF = [Baseforce1,Baseforce2,Baseforce3,Baseforce23]
+
         for n, DATA in enumerate([F1, F2, F3, F23]):
             DATA = np.array(DATA)
             x = DATA[:,0]
@@ -376,10 +377,10 @@ class PitchFoilRun:
 
         ax.grid(which='both',axis='both')
         ax.set_xlabel('Phase [deg]')
-        ax.set_ylim(-0.5,2)
+        ax.set_ylim(0.0,2.5)
         ax.set_ylabel('Normal Force Proxy (normalized)')
         fig.legend(loc='outside upper center', mode = "expand", ncol = 4)
-        fig.savefig(self.folder_location + '/PN Combi ' + self.run_name + '.svg', bbox_inches='tight')
+        fig.savefig(self.folder_location + '/PN Combi2 ' + self.run_name + '.svg', bbox_inches='tight')
         plt.show()
 
     def plot_FNCombi(self):
@@ -393,10 +394,11 @@ class PitchFoilRun:
 
         for n,test_index in enumerate(self.short_relative_test_matrix.index):
             if self.short_relative_test_matrix.loc[test_index, 'relativeA'] == 1 and self.short_relative_test_matrix.loc[test_index, 'P'] == 0:
-                Nforce23 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S2_offset+np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S3_offset))/3
                 Nforce1 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S1']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S1']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S1']))-self.S1_offset))/3
-                Nforce2 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S1_offset))/3
-                Nforce3 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S1_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S1_offset))/3
+                Nforce2 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S2']))-self.S2_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S2']))-self.S2_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S2']))-self.S2_offset))/3
+                Nforce3 = ((np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.1 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.2 S3']))-self.S3_offset)+(np.average(self.drop_nans(self.results.loc[self.short_relative_test_matrix.index[n] + '.3 S3']))-self.S3_offset))/3
+                Nforce23 = Nforce2 + Nforce3
+
 
                 F1.append([self.short_relative_test_matrix.loc[test_index, 'relativef'], Nforce1])
                 F2.append([self.short_relative_test_matrix.loc[test_index, 'relativef'], Nforce2])
@@ -430,13 +432,12 @@ class PitchFoilRun:
         fig.savefig(self.folder_location + '/FN Combi ' + self.run_name + '.svg', bbox_inches='tight')
         plt.show()
 
-
-
 if __name__ == "__main__":
     Run = PitchFoilRun('RUN4')
-    Run.plot_signal()
+    #Run.plot_signal()
+    #Run.plot_PNCombi()
 
-    Run.plot_FNCombi()
+    # Run.plot_FNCombi()
 
 
 
